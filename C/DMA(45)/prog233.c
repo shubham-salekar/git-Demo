@@ -1,6 +1,8 @@
 
+// realloc
+
 #include<stdio.h>
-//#include<stdlib.h>
+
 
 void* calloc(size_t,size_t);
 void* realloc(void *ptr , long unsigned int);
@@ -52,7 +54,7 @@ void main(){
 
 	printf("\n");
 
-	printf("%p\n",ptr2);
+	printf("ptr2 after adding values = %p\n",ptr2);
 
 	
 }
