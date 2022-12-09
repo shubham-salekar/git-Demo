@@ -12,7 +12,7 @@ typedef struct student{
 
 }stud;
 
-stud *head = NULL;
+  stud *head = NULL;
 
 void addnode(){
 
@@ -37,6 +37,7 @@ void printll(){
 	}
 
 }
+//stud *head = NULL;
 void main(){
 
 	addnode();
