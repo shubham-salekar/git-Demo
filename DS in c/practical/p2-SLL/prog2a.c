@@ -16,7 +16,7 @@ node* createnode(){
 
 	int i = 0;
 	char ch;
-	getchar();
+	//getchar();
 
 	printf("enter string\n");
 
@@ -182,27 +182,34 @@ void delete_last(){
 	temp->next = 0;
 
 }
-void delete_atpos(int num){
-
-	int pos = num;
+void delete_atpos(int pos){
 
 	if(head == NULL){
-	
 		printf("LL is empty\n");
 	}else{
 	
 		int count = countnode();
 		
-		if(pos <= 0 || pos >=count+2){
+		if(pos <= 0 || pos > count){
 		
 			printf("invalid pos\n");
 		}
 		else if (pos == count){
-		
-			delete_last();
+
+			if (count==1) {
+				free(head) ;
+				head=NULL ;
+			}
+			else{
+				delete_last();
+			}
 		}
 		else if(pos == 1){
-		
+			if (count==1) {
+				free(head) ;
+				head=NULL ;
+			}
+			else 
 			delete_first();
 		}
 		else {
@@ -212,8 +219,9 @@ void delete_atpos(int num){
 			while(pos-2){
 			
 				temp1 = temp1->next;
+				pos-- ;
 			}
-			node *temp2 = temp1;
+			node *temp2 = temp1->next;
 			temp1 ->next = temp1->next->next;
 			free(temp2);
 		}
@@ -227,31 +235,32 @@ void str_equallength(){
 
 	node *temp = head;
 
-	int count1 = 0;
+	int pos = 0;
 
 	while(temp != 0){
 	
-		count1++;
+		pos++;
 		char *str1 = &temp->str[0];
 
-		int count2 = 0;
+		int len2 = 0;
 		while(*str1 != '\0'){
 		
-			count2++;
+			len2++;
 			str1++;
 		}
-		if(count2 != len){
-		
-			delete_atpos(count1);
-			count1 = 0;
+		if(len2 != len){
+			delete_atpos(pos);
+			pos--;
+			temp = temp->next;
 		}
-		
-		temp = temp->next;
+		else {
+			temp = temp->next;
+		}
 
 	}
 }
 void main(){
-
+	
 	char choice;
 
 	do{
@@ -269,8 +278,18 @@ void main(){
 
 		switch(ch){
 		
-			case 1:
-				addnode();
+			case 1:{
+				       int ncount;
+				       printf("Enetr node count : ");
+				       scanf("%d",&ncount);
+				       
+					   getchar();
+
+				       for(int i=1;i<=ncount;i++){
+				       	
+							addnode();
+				       }
+			       }
 				break;
 			case 2:
 				printll();
@@ -292,5 +311,5 @@ void main(){
 		printf("Do u want to continue\n");
 		scanf(" %c",&choice);
 
-	}while(choice == 'y' || choice == 'Y');
+	}while(choice == 'Y' || choice == 'y');
 }

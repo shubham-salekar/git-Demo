@@ -50,7 +50,7 @@ int countnode(){
 	
 		printf("LL IS EMPTY\n");
 	}else{
-		node *temp = head;
+		node *temp = head ;
 		
 		while(temp != NULL){
 	
@@ -59,6 +59,7 @@ int countnode(){
 		}
 	
 	}
+	printf("count = %d",count);
 	return count;
 }
 void printll(){
@@ -69,10 +70,10 @@ void printll(){
 	
 		if(head = 0){
 		
-			printf("| %d |",temp->data);
+			printf("| %p |",temp->next);
 		}else{
 		
-			printf("| %d |->",temp->data);
+			printf("| %p |->",temp->next);
 		}
 	
 		temp=temp->next;
@@ -204,11 +205,17 @@ void deleteatpos(){
 				temp = temp->next;
 				pos--;
 			}
+			/*
 			temp->next = temp->next->next;
 			temp->next->next->prev = temp;
 
 			free(temp->next);
-			
+			*/
+
+			temp1->next = temp->next->next;
+			free(temp->next->prev);
+
+			temp->next->prev = temp;
 		}
 	}
 }
@@ -234,14 +241,23 @@ void main(){
 
 		switch(ch){
 		
-			case 1:
-				addnode();
+			case 1:{
+				int n;
+				printf("enter node count\n");
+				scanf("%d",&n);
+
+				for (int i=1 ; i<=n ; i++){
+				
+					addnode();
+				}
+			       }
 				break;
 			case 2:
 				printll();
 				break;
 			case 3:
-				printf("total nodes = %d\n",countnode());
+				//printf("total nodes = %d\n",countnode());
+				countnode();
 				break;
 			case 4:
 				addatfirst();
