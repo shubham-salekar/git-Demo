@@ -1,4 +1,3 @@
-
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -31,52 +30,57 @@ void addnode(){
 	if(head == NULL){
 	
 		head = newnode;
+		head->prev = head;
+		head->next = head;
 	}else{
 	
 		node *temp = head;
-		while(temp->next !=0){
+		while(temp->next != head){
 		
 			temp = temp->next;
 		}
 		temp->next = newnode;
 		newnode ->prev = temp;
+		newnode->next = head;
+		head->prev = newnode;
+
 	}
 }
 int countnode(){
 
-	int count = 0;
-
 	if(head == NULL){
 	
 		printf("LL IS EMPTY\n");
+		return -1;
 	}else{
+		int count = 1;
 		node *temp = head ;
 		
-		while(temp != NULL){
+		while(temp->next != head){
 	
 			count++;
 			temp=temp->next;
 		}
-	
+		return count;
 	}
-	printf("count = %d",count);
-	return count;
+	
 }
 void printll(){
 
-	node *temp = head;
+	if(head == NULL){
 	
-	while(temp!=0){
-	
-		if(head = 0){
+		printf("LL is empty\n");
+	}else{
 		
-			printf("| %p |",temp->next);
-		}else{
-		
-			printf("| %p |->",temp->next);
-		}
+		node *temp = head;
 	
-		temp=temp->next;
+		while(temp->next!=head){
+		
+			printf("| %d |->",temp->data);
+			temp = temp->next;
+
+		}	
+		printf("| %d |\n",temp->data);
 	}
 
 }
@@ -87,11 +91,23 @@ void addatfirst(){
 	if(head == 0){
 	
 		head = newnode;
+		head->prev = head;
+		head->next = head;
+
 	}else{
 		
 		newnode->next = head;
+		newnode->prev = head->prev;
+		head->prev->next = newnode;
+		head = newnode;
+
+		/*
+		newnode->next = head;
+		newnode->prev = head->prev;
 		head->prev = newnode;
 		head = newnode;
+		head->prev->next = head;
+		*/
 
 	}
 }
@@ -123,71 +139,107 @@ void addatposition(int pos){
 			pos--;
 		}
 		newnode->next = temp->next;
-		newnode->prev = temp;
+		temp->next->prev = newnode;
+
 		temp->next = newnode;
-		newnode->next->prev = newnode;
+		newnode->prev = temp;
 	}
 }
-void deletefirst(){
+int deletefirst(){
 
 	if(head == NULL){
 	
 		printf("Already empty\n");
-	}else{
-	
-		node *temp = head;
-	
-		head = head->next;
-		free(head->next->prev);
-		
-		head->prev = NULL;
+		return -1;
 
-	}
-}
-void deletelast(){
-
-	if(head == NULL){
-	
-		printf("LL is alredy empty\n");
 	}else{
 	
 		int count = countnode();
 
 		if(count == 1){
 		
-			deletefirst();
+			free(head);
+			head = NULL;
+		}else{
+		/*
+			node *temp = head;
+	
+			head->prev->next = head->next;
+			head->next->prev = head->prev;
+			head = head->next;
+
+			free(temp);
+
+		*///without temp
+
+			head = head->next;
+			head->prev = head->prev->prev;
+
+			free(head->prev->next);
+			head->prev->next = head;
+		
+		}
+
+	}
+	return 0;
+}
+int  deletelast(){
+
+	if(head == NULL){
+	
+		printf("LL is alredy empty\n");
+		return -1;
+
+	}else{
+	
+		int count = countnode();
+
+		if(count == 1  ){
+		
+			free(head);
+			head = NULL;
+			
 		}else{
 		
+		//without temp
+
+			head->prev = head->prev->prev;
+			free(head->prev->next);
+			
+			head->prev->next = head;
+		
+		//with temp
+		/*
 			node *temp = head;
 
-			while(temp->next->next != 0){
+			while(temp->next->next != head){
 			
 				temp = temp->next;
 			}
-			
-			free(temp->next->prev);
 			free(temp->next);
-
-			temp->next = NULL;
+			temp->next = head;
+		
+			temp = temp->next;
+			head->prev = temp;
+		*/
 		}
 	}
 }
-void deleteatpos(){
+int deleteatpos(){
 
 	int pos;
 	printf("which node do u want to del,enter any pos\n");
 	scanf("%d",&pos);
 
-	if(head == 0){
+	int count = countnode();
+	if(pos<=0 || pos>=count+2){
 	
-		printf("LL is empty\n");
+		printf("invalid position\n");
+		return -1;
 	}else{
-	
-		int count = countnode();
-
-		if(pos<=0 || pos>=count+1){
+		if(head == NULL){
 		
-			printf("invalid input\n");
+			printf("LL is empty\n");
 		}
 		else if(pos == 1){
 		
@@ -205,12 +257,6 @@ void deleteatpos(){
 				temp = temp->next;
 				pos--;
 			}
-			/*
-			temp->next = temp->next->next;
-			temp->next->next->prev = temp;
-
-			free(temp->next);
-			*/
 
 			temp->next = temp->next->next;
 			free(temp->next->prev);
@@ -256,8 +302,7 @@ void main(){
 				printll();
 				break;
 			case 3:
-				//printf("total nodes = %d\n",countnode());
-				countnode();
+				printf("total nodes = %d\n",countnode());
 				break;
 			case 4:
 				addatfirst();
@@ -295,6 +340,7 @@ void main(){
 
 
 	
+
 
 
 

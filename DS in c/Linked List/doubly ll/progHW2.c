@@ -1,24 +1,26 @@
 
+// real time example of doubly link list
+
 #include<stdio.h>
 #include<stdlib.h>
 
-typedef struct node{
+typedef struct library{
 
-	struct node *prev;
-	int data;
-	struct node *next;
-}node;
+	struct library *prev;
+	int rowno;
+	struct library *next;
+}library;
 
-node *head = NULL;
+library *head = NULL;
 
-node* createnode(){
+library* createnode(){
 
-	node *newnode = (node*)malloc(sizeof(node));
+	library *newnode = (library*)malloc(sizeof(library));
 
 	newnode->prev = NULL;
 
-	printf("Enter data\n");
-	scanf("%d",&newnode->data);
+	printf("Enter row id.\n");
+	scanf("%d",&newnode->rowno);
 
 	newnode->next = NULL;
 
@@ -26,14 +28,15 @@ node* createnode(){
 }
 void addnode(){
 
-	node *newnode = createnode();
+	library *newnode = createnode();
 
 	if(head == NULL){
 	
 		head = newnode;
 	}else{
 	
-		node *temp = head;
+		library *temp = head;
+
 		while(temp->next !=0){
 		
 			temp = temp->next;
@@ -48,9 +51,9 @@ int countnode(){
 
 	if(head == NULL){
 	
-		printf("LL IS EMPTY\n");
+		printf("Library IS EMPTY\n");
 	}else{
-		node *temp = head ;
+		library *temp = head ;
 		
 		while(temp != NULL){
 	
@@ -59,30 +62,30 @@ int countnode(){
 		}
 	
 	}
-	printf("count = %d",count);
+//	printf("total row count = %d",count);
 	return count;
 }
 void printll(){
 
-	node *temp = head;
+	if(head == NULL){
 	
-	while(temp!=0){
+		printf("library is empty\n");
+	}else{
 	
-		if(head = 0){
-		
-			printf("| %p |",temp->next);
-		}else{
-		
-			printf("| %p |->",temp->next);
-		}
+		library *temp = head;
 	
-		temp=temp->next;
-	}
+		while(temp->next !=0){
+	
+			printf("| %d |->",temp->rowno);
 
+			temp = temp->next;
+		}	
+		printf("| %d |\n",temp->rowno);
+	}
 }
 void addatfirst(){
 
-	node *newnode = createnode();
+	library *newnode = createnode();
 
 	if(head == 0){
 	
@@ -113,9 +116,9 @@ void addatposition(int pos){
 
 	}else{
 	
-		node *newnode = createnode();
+		library *newnode = createnode();
 
-		node *temp = head;
+		library *temp = head;
 
 		while(pos-2){
 		
@@ -132,40 +135,47 @@ void deletefirst(){
 
 	if(head == NULL){
 	
-		printf("Already empty\n");
+		printf("library is Already empty\n");
 	}else{
-	
-		node *temp = head;
-	
-		head = head->next;
-		free(head->next->prev);
-		
-		head->prev = NULL;
 
+		int count = countnode();
+
+		if(count == 1){
+		
+			free(head);
+			head = NULL;
+		}else{
+	
+			head = head->next;
+			free(head->prev);
+			head->prev = NULL;
+
+		}
 	}
 }
 void deletelast(){
 
 	if(head == NULL){
 	
-		printf("LL is alredy empty\n");
+		printf("Library is alredy empty\n");
 	}else{
 	
 		int count = countnode();
 
 		if(count == 1){
 		
-			deletefirst();
+			free(head);
+			head = NULL;
 		}else{
 		
-			node *temp = head;
+			library *temp = head;
 
 			while(temp->next->next != 0){
 			
 				temp = temp->next;
 			}
 			
-			free(temp->next->prev);
+		//	free(temp->next->prev);
 			free(temp->next);
 
 			temp->next = NULL;
@@ -175,7 +185,7 @@ void deletelast(){
 void deleteatpos(){
 
 	int pos;
-	printf("which node do u want to del,enter any pos\n");
+	printf("which row do u want to remove,enter row no.\n");
 	scanf("%d",&pos);
 
 	if(head == 0){
@@ -198,20 +208,13 @@ void deleteatpos(){
 			deletelast();
 		}else{
 		
-			node* temp = head;
+			library* temp = head;
 
 			while(pos-2){
 			
 				temp = temp->next;
 				pos--;
 			}
-			/*
-			temp->next = temp->next->next;
-			temp->next->next->prev = temp;
-
-			free(temp->next);
-			*/
-
 			temp->next = temp->next->next;
 			free(temp->next->prev);
 
@@ -226,14 +229,14 @@ void main(){
 
 	do{
 	
-		printf("1.add node\n");
-		printf("2.Show total nodes\n");
-		printf("3.count\n");
-		printf("4.Add at FIRST position\n");
-		printf("5.Add RANDOM position\n");
-		printf("6.Remove first \n");
-		printf("7.Remove  RANDOM\n");
-		printf("8.Remove last \n");
+		printf("1.add row\n");
+		printf("2.Show total rows\n");
+		printf("3.count of total rows\n");
+		printf("4.Add row at FIRST position\n");
+		printf("5.Add row at given position\n");
+		printf("6.Remove first row\n");
+		printf("7.Remove given row\n");
+		printf("8.Remove last row\n");
 		
 		int ch;
 		printf("Enter choice\n");
@@ -243,7 +246,7 @@ void main(){
 		
 			case 1:{
 				int n;
-				printf("enter node count\n");
+				printf("enter rows count\n");
 				scanf("%d",&n);
 
 				for (int i=1 ; i<=n ; i++){
@@ -256,8 +259,8 @@ void main(){
 				printll();
 				break;
 			case 3:
-				//printf("total nodes = %d\n",countnode());
-				countnode();
+				printf("total nodes = %d\n",countnode());
+			//	countnode();
 				break;
 			case 4:
 				addatfirst();
@@ -285,7 +288,7 @@ void main(){
 
 		}
 		getchar();
-		printf("Do you to continue\n");
+		printf("Do you want to continue\n");
 		scanf("%c",&choice);
 	
 	}while(choice == 'y' || choice == 'Y' );
