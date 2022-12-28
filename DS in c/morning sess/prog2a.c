@@ -1,3 +1,4 @@
+// inplace reverse dll
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -48,7 +49,7 @@ void printll(){
 	
 	while(temp!=0){
 	
-		if(head = 0){
+		if(head ==0){
 		
 			printf("| %d |",temp->data);
 		}else{

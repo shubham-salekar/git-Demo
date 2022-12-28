@@ -1,3 +1,5 @@
+// inplace reverse dll
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -77,11 +79,12 @@ int inplaceR(){
 
                 if(head->prev == NULL){
                     head = temp->prev;
-                    break;
+                   // break;
                 }else{
 
+                    temp = head;
                     head = head->prev;
-                    temp = head->prev;
+                   // temp = head->prev;
                 }
             }
         }

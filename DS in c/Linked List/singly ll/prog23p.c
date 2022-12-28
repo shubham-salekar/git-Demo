@@ -15,7 +15,7 @@ cb* createnode(){
 	cb *newnode = (cb*)malloc(sizeof(cb));
 
 	printf("Enter Drawer id\n");
-	scanf("%d",&(newnode->id))s
+	scanf("%d",&(newnode->id));
 
 	newnode->next = NULL;
 
