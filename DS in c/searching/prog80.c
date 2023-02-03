@@ -20,11 +20,11 @@ int binary(int size,int arr[],int key){
 			printf("step count = %d\n",count);
 			return mid;
 		}
-		if(start == end-1){
+		/*if(start == end-1){
 		
 			printf("step count = %d\n",count);
 			return end;
-		}
+		}*/
 		if(key < arr[mid]){
 		
 			end = mid-1;
@@ -33,8 +33,8 @@ int binary(int size,int arr[],int key){
 		
 			start = mid+1;
 		}
+	}
 
-	/mnt/e/bootcamp-c-cpp-ds/DS in c/mnt/e/bootcamp-c-cpp-ds/DS in c}
 	return -1;
 
 }
