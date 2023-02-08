@@ -1,4 +1,6 @@
 
+					// incomplete
+
 // binary search in rotated array
 
 #include<stdio.h>
