@@ -1,7 +1,18 @@
+// good pair
+
 #include<stdio.h>
 
 int goodpair(int arr[],int size,int b){
 
+	for(int i=0 ; i<size ; i++){
+	
+		for(int j=i ; j<size ; j++){
+		
+			if(i!=j && (arr[i]+arr[j] == b))
+				return 1;
+		}
+	}
+	return 0;
 
 }
 
@@ -23,11 +34,11 @@ void main(){
 	printf("enter terget number\n");
 	scanf("%d",&num);
 
-	int ret = cntele(arr,size,num);
+	int ret = goodpair(arr,size,num);
 	
-	if(count != 0)
-		printf("count of elements = %d\n",ret);
+	if(ret == 1)
+		printf("good pair is present\n");
 	else
-		printf("count of elements = %d\n",ret);
+		printf("good pair not present\n");
 
 }
