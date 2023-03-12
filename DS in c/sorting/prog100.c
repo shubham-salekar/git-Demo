@@ -9,8 +9,7 @@ void mergesort(int arr[],int start,int end){
 		int mid= (start+end)/2;
 		mergesort(arr,start,mid);
 		mergesort(arr,mid+1,end);
-	}
-	else
+	}else
 		printf("count = %d\n",count);
 }
 

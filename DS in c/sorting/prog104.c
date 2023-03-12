@@ -1,52 +1,42 @@
 
-// quick sort: hoares approach(first element is pivot)
+// quick sort lomoto approach(end element as pivot element)
 
 #include<stdio.h>
 
-int hoaressort(int arr[],int start,int end){
+int swap(int *ptr1,int *ptr2){
 
-	int pivot = arr[start];
-
-	int i = start-1;
-	int j = end+1;
-
-	while(1){
-	
-		do{
-			i++;
-
-		}while(arr[i] < pivot);
-
-		do{
-			j--;
-
-		}while(arr[j] > pivot);
-
-		if(i>=j){
-			return j;
-		}
-		else{
-		
-			int temp = arr[i];
-			arr[i] = arr[j];
-			arr[j] = temp;
-		}
-	}
-	
+	int temp = *ptr1;
+	*ptr1 = *ptr2;
+	*ptr2 = temp;
 
 }
+int partition(int arr[],int start,int end){
 
+	int pivot = arr[end];
+
+	int itr = start-1;
+	for(int i=start ; i<=end ; i++){
+	
+		if(arr[i] < pivot){
+		
+			itr++;
+			swap(&arr[i],&arr[itr]);
+		}
+	}
+	swap(&arr[itr+1] , &arr[end]);
+	return itr+1;
+}
 int quicksort(int arr[],int start,int end){
 
 	if(start<end){
-	
-		int piv = hoaressort(arr,start,end);
+		
+		int piv = partition(arr,start,end);
 
 		quicksort(arr,start,piv-1);
 		quicksort(arr,piv+1,end);
 	}
-
 }
+
 
 void main(){
 
