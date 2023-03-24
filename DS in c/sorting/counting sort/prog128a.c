@@ -33,16 +33,9 @@ void cntSort(int arr[],int size){
 	
 		if(cntarr[i] != 0){
 
-			if(j < cntarr[i]){
-		
-				newarr[index] = i;
-				j++;
-				index++;
-			}else{
-			
-				j = 0;
-				i++;
-			}
+			newarr[j] = i;
+			j++;
+			cntarr[i]--;
 		}else{
 			i++;
 		}

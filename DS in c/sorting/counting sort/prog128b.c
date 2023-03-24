@@ -1,4 +1,4 @@
-// counting sort : unstable
+// counting sort : stable
 
 #include<stdio.h>
 
@@ -25,31 +25,28 @@ void cntSort(int arr[],int size){
 		cntarr[temp]++;
 	}
 	
-	// filling sorted values in newarr(unstable)
-	int newarr[size];
-	int j = 0;
-	int index = 0;
-	for(int i=0 ; i<=max ; ){
+	// comulative sum
+	for(int i=1 ; i<=max ; i++){
 	
-		if(cntarr[i] != 0){
+		cntarr[i] = cntarr[i] + cntarr[i-1];
+	}
 
-			if(j < cntarr[i]){
-		
-				newarr[index] = i;
-				j++;
-				index++;
-			}else{
-			
-				j = 0;
-				i++;
-			}
-		}else{
-			i++;
-		}
+	//filling sorted values in newarr(stable)
+	int newarr[size];
+	for(int i= size-1 ; i>=0 ;i--){
+	
+		newarr[cntarr[arr[i]]-1] = arr[i];
+
+		/*
+		int temp = arr[i];
+		newarr[cntarr[temp] - 1];
+		*/
+
+		cntarr[arr[i]]--;
 	}
 	
+	
 	// printing sorted array
-
 	for(int i=0 ; i<size ; i++){
 	
 		printf("%d ",newarr[i]);
