@@ -1,5 +1,6 @@
 
-// mergesort in array
+// msort in array
+// bubble sort
 
 #include<stdio.h>
 
